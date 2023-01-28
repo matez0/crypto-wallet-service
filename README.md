@@ -12,23 +12,28 @@ This is a Django application for generating and displaying cryptocurrency addres
 - Encrypt Django database.
 - Implement address generation for ETH currency (using Web3).
 - Run tests in Python virtual environment.
-- Handle dependencies in `requirements.txt`
 
 
 # Bootstrap
 
 Install `libgmp-dev` for the Python Bitcoin Library.
 
-Install Python 3.6 or greater and the following Python packages:
-- `behave`
-- `requests`
-- `Django`
-- `djangorestframework`
-- `bitcoinlib`
+Install Python 3.6 or newer.
 
-For local installation, use `pip`, e.g.:
+Create a python virtual environment:
 ```
-python -m pip install requests
+python -m venv .venv
+```
+
+Activate the virtual environment:
+```
+. .venv/bin/activate
+```
+
+Install [Python library dependencies](requirements.txt):
+```
+pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
 
