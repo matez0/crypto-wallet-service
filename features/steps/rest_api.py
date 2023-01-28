@@ -10,6 +10,7 @@ from time import sleep
 
 from behave import given, then, when
 import requests
+from retry import retry
 
 from environment import django_manage_commandline
 
@@ -20,7 +21,12 @@ SERVER_URL = 'http://127.0.0.1:8000'
 def step_impl(context):
     context.service_process = Popen(django_manage_commandline('runserver'))
     context.add_cleanup(context.service_process.terminate)
-    sleep(5)
+    wait_for_service_being_ready()
+
+
+@retry(requests.exceptions.ConnectionError, tries=10, delay=0.5)
+def wait_for_service_being_ready():
+    requests.get(SERVER_URL, timeout=10)
 
 
 @when(u"I POST '{endpoint}' to the service with JSON content")
