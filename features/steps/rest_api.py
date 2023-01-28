@@ -5,43 +5,22 @@
 
 import json
 import os
-from shutil import rmtree, copytree, copy
-from subprocess import Popen, run, STDOUT
+from subprocess import Popen, STDOUT
 from time import sleep
 
 from behave import given, then, when
 import requests
 
-SERVER_URL = 'http://127.0.0.1:8000'
+from environment import django_manage_commandline
 
-PYTHON_PATH = '/usr/bin/python3'
+SERVER_URL = 'http://127.0.0.1:8000'
 
 
 @given(u'the service is started')
 def step_impl(context):
-    service_dir = install_service()
-    context.service_process = Popen(django_manage_commandline('runserver'), cwd=service_dir)
+    context.service_process = Popen(django_manage_commandline('runserver'))
     context.add_cleanup(context.service_process.terminate)
-    sleep(2)
-
-
-def django_manage_commandline(command):
-    return f'{PYTHON_PATH} manage.py {command}'.split()
-
-
-def install_service():
-    service_dir = '/tmp/test-wallet-service'
-    rmtree(service_dir, ignore_errors=True)
-    os.mkdir(service_dir)
-    for source_dir in ['django_project', 'wallet']:
-        copytree(source_dir, os.path.join(service_dir, source_dir))
-    copy('manage.py', service_dir)
-
-    run(django_manage_commandline('makemigrations'), cwd=service_dir)
-
-    run(django_manage_commandline('migrate'), cwd=service_dir)
-
-    return service_dir
+    sleep(5)
 
 
 @when(u"I POST '{endpoint}' to the service with JSON content")

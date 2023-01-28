@@ -11,7 +11,6 @@ This is a Django application for generating and displaying cryptocurrency addres
 
 - Encrypt Django database.
 - Implement address generation for ETH currency (using Web3).
-- Run tests in Python virtual environment.
 
 
 # Bootstrap
