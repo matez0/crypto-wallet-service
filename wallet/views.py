@@ -5,10 +5,9 @@
 
 import json
 
-from bitcoinlib.keys import BKeyError, HDKey
 from rest_framework import viewsets
-from rest_framework.exceptions import ParseError
 
+from .address_generator import generate_address
 from .models import Wallet
 from .serializers import WalletSerializer
 
@@ -18,11 +17,7 @@ class WalletViewSet(viewsets.ModelViewSet):
     queryset = Wallet.objects.all()
 
     def create(self, request):
-        if request.data['currency'] == 'BTC':
-            request.data['address'] = generate_address_for_btc(request.data)
-
-        else:
-            raise ParseError("Invalid currency")
+        request.data['address'] = generate_address(request.data)
 
         response = super().create(request)
         response.data = filter_public_data(response.data)
@@ -37,16 +32,6 @@ class WalletViewSet(viewsets.ModelViewSet):
         response = super().retrieve(request)
         response.data = filter_public_data(response.data)
         return response
-
-
-def generate_address_for_btc(request_data):
-    try:
-        hd_key = HDKey(request_data['private_key'])
-
-    except BKeyError as e:
-        raise ParseError(e)
-
-    return hd_key.child_private(request_data['index']).address()
 
 
 def filter_public_data(response_data):
