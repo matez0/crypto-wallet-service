@@ -7,15 +7,15 @@ from bitcoinlib.keys import BKeyError, HDKey
 from rest_framework.exceptions import ParseError
 
 
-def generate_address(request_data):
-    if request_data['currency'] == 'BTC':
+def generate_address(currency: str, private_key: str, index: int):
+    if currency == 'BTC':
         try:
-            hd_key = HDKey(request_data['private_key'])
+            hd_key = HDKey(private_key)
 
         except BKeyError as e:
             raise ParseError(e)
 
-        return hd_key.child_private(request_data['index']).address()
+        return hd_key.child_private(index).address()
 
     else:
         raise ParseError("Invalid currency")

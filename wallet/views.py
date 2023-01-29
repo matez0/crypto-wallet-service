@@ -8,7 +8,6 @@ from http import HTTPStatus
 from django.http import JsonResponse
 from rest_framework import viewsets
 
-from .address_generator import generate_address
 from .models import Wallet
 from .serializers import CreateWalletRequestSerializer, WalletSerializer
 
@@ -20,9 +19,6 @@ class WalletViewSet(viewsets.ModelViewSet):
     def create(self, request):
         data = CreateWalletRequestSerializer(request.data).data
 
-        address = generate_address(data)
-
-        wallet = Wallet(**data, address=address)
-        wallet.save()
+        wallet = Wallet.create(**data)
 
         return JsonResponse(self.serializer_class(wallet).data, status=HTTPStatus.CREATED)
