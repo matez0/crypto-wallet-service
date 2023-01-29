@@ -10,7 +10,7 @@ from rest_framework import viewsets
 
 from .address_generator import generate_address
 from .models import Wallet
-from .serializers import WalletSerializer
+from .serializers import CreateWalletRequestSerializer, WalletSerializer
 
 
 class WalletViewSet(viewsets.ModelViewSet):
@@ -18,9 +18,11 @@ class WalletViewSet(viewsets.ModelViewSet):
     queryset = Wallet.objects.all()
 
     def create(self, request):
-        address = generate_address(request.data)
+        data = CreateWalletRequestSerializer(request.data).data
 
-        wallet = Wallet(**request.data, address=address)
+        address = generate_address(data)
+
+        wallet = Wallet(**data, address=address)
         wallet.save()
 
         return JsonResponse(self.serializer_class(wallet).data, status=HTTPStatus.CREATED)

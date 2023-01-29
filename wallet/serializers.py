@@ -12,3 +12,9 @@ class WalletSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wallet
         exclude = ['private_key', 'index']
+
+
+class CreateWalletRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Wallet
+        exclude = ["address"]
