@@ -12,8 +12,8 @@ def generate_address(currency: str, private_key: str, index: int):
         try:
             hd_key = HDKey(private_key)
 
-        except BKeyError as e:
-            raise ParseError(e)
+        except BKeyError as exc:
+            raise ParseError(exc)
 
         return hd_key.child_private(index).address()
 
