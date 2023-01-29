@@ -3,9 +3,13 @@
 # Copyright (C) Zoltán Máté 2021.
 # Distributed under the MIT License (license terms are at http://opensource.org/licenses/MIT).
 
+import logging
+
 from django.db import models
 
 from .address_generator import generate_address
+
+logger = logging.getLogger('django')
 
 
 class Wallet(models.Model):
@@ -17,6 +21,8 @@ class Wallet(models.Model):
     @classmethod
     def create(cls, currency: str, private_key: str, index: int):
         address = generate_address(currency, private_key, index)
+
+        logger.info("Creating wallet; currency='%s' address='%s'", currency, address)
 
         instance = cls(currency=currency, address=address, private_key=private_key, index=index)
         instance.save()
