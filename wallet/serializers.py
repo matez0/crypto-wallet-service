@@ -11,4 +11,4 @@ from .models import Wallet
 class WalletSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wallet
-        fields = ["id", "currency", "address", "private_key", "index"]
+        exclude = ['private_key', 'index']
