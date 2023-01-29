@@ -3,8 +3,6 @@
 # Copyright (C) Zoltán Máté 2021.
 # Distributed under the MIT License (license terms are at http://opensource.org/licenses/MIT).
 
-import json
-
 from rest_framework import viewsets
 
 from .address_generator import generate_address
