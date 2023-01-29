@@ -114,6 +114,11 @@ behave
 ```
 from the root directory of the repository.
 
+To run unit tests, execute:
+```
+python manage.py test
+```
+
 
 # References
 
