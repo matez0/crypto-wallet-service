@@ -79,7 +79,7 @@ Content-Type: application/json
         "address": "1MMAjrRaoje4C9VrHN7BH4vGTmhGyNgGeE"
     },
     {
-        "id": 1,
+        "id": 2,
         "currency": "BTC",
         "address": "16PDszGGgWaFnp4sp9WxVRwhZcgieeWRzq"
     }
@@ -113,6 +113,11 @@ To run all tests, run
 behave
 ```
 from the root directory of the repository.
+
+To run unit tests, execute:
+```
+python manage.py test
+```
 
 
 # References
