@@ -1,3 +1,5 @@
+[![test](https://github.com/matez0/crypto-wallet-service/actions/workflows/test.yml/badge.svg)](https://github.com/matez0/crypto-wallet-service/actions)
+
 # crypto-wallet-service
 
 Generating and displaying cryptocurrency addresses
